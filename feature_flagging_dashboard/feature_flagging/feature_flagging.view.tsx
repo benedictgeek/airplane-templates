@@ -17,32 +17,44 @@ const FeaturesDashboard = () => {
     <Stack>
       <Title>Features dashboard</Title>
       <Text>Look up a feature and list customers subscribed to a feature</Text>
-      <Stack direction="row" align="end">
-        <TextInput id="searchKeyword" label="Search for a feature" />
-      </Stack>
       <Stack direction="row" align="center">
         <Table
           id="features"
           title="Features"
           columns={featuresCols}
+          defaultPageSize={5}
           task={{
             slug: "demo_search_features",
             params: { search_keyword: searchKeyword.value },
           }}
           rowSelection="single"
-          showFilter={false}
-          hiddenColumns={["updated_at"]}
+          showFilter={true}
+          hiddenColumns={[]}
         />
       </Stack>
     </Stack>
   );
 };
 
+const IsEnabledComponent = ({ is_enabled }) => {
+  const text = is_enabled == true ? "Enabled" : "Disabled";
+  const bgColor = is_enabled == true ? "lightcyan" : "lightgoldenrodyellow";
+  return (
+    <Card withBorder={false} p="sm" sx={{ background: bgColor }}>
+      <Text sx={{ fontWeight: 500 }}>{text}</Text>
+    </Card>
+  );
+};
+
 const featuresCols = [
   { accessor: "feature_id", label: "Feature ID" },
   { accessor: "feature_name", label: "Feature name" },
-  { accessor: "is_enabled", label: "Is enabled" },
-  { accessor: "updated_at", label: "Updated at" },
+  { accessor: "updated_at", label: "Last update" },
+  {
+    accessor: "is_enabled",
+    label: "Is enabled",
+    component: IsEnabledComponent,
+  },
 ];
 
 export default FeaturesDashboard;
