@@ -10,6 +10,8 @@ import {
   Divider,
 } from "@airplane/views";
 
+import dayjs from "dayjs";
+
 const FeaturesDashboard = () => {
   const searchKeyword = useComponentState("searchKeyword");
 
@@ -17,7 +19,7 @@ const FeaturesDashboard = () => {
     <Stack>
       <Title>Features dashboard</Title>
       <Text>Look up a feature and list customers subscribed to a feature</Text>
-      <Stack direction="row" align="center">
+      <Stack direction="column">
         <Table
           id="features"
           title="Features"
@@ -46,10 +48,14 @@ const IsEnabledComponent = ({ is_enabled }) => {
   );
 };
 
+const FormatDate = ({ updated_at }) => {
+  return <Text>{dayjs(updated_at).format("DD/MM/YYYY, hh:mm:ss A")}</Text>;
+};
+
 const featuresCols = [
   { accessor: "feature_id", label: "Feature ID" },
   { accessor: "feature_name", label: "Feature name" },
-  { accessor: "updated_at", label: "Last update" },
+  { accessor: "updated_at", label: "Last update", component: FormatDate },
   {
     accessor: "is_enabled",
     label: "Is enabled",
