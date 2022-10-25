@@ -1,0 +1,17 @@
+# Full reference: https://docs.airplane.dev/tasks/task-definition
+
+slug: demo_search_feature_flags
+name: Search feature flags
+description: "SQL task that shows all feature flags that match a search keyword."
+parameters:
+  - slug: search_keyword
+    name: Search keyword
+    type: shorttext
+    description: The search string
+    required: false
+sql:
+  # Replace with your own DB name
+  resource: "[Demo DB]"
+  entrypoint: search_feature_flags.sql
+  queryArgs:
+    keyword: "{{params.search_keyword}}"
