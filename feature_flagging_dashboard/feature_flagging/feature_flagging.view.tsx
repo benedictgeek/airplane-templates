@@ -1,5 +1,6 @@
 import {
   Button,
+  Checkbox,
   Stack,
   Table,
   Text,
@@ -8,6 +9,9 @@ import {
   Card,
   useComponentState,
   Divider,
+  Form,
+  showNotification,
+  useTaskMutation,
 } from "@airplane/views";
 
 import dayjs from "dayjs";
@@ -19,6 +23,7 @@ const FeaturesDashboard = () => {
     <Stack>
       <Title>Features dashboard</Title>
       <Text>Look up a feature and list customers subscribed to a feature</Text>
+      <CreateFeature />
       <Stack direction="column">
         <Table
           id="features"
@@ -35,6 +40,53 @@ const FeaturesDashboard = () => {
         />
       </Stack>
     </Stack>
+  );
+};
+
+const CreateFeature = () => {
+  const { values: createFeatureValues } = useComponentState("createNewFeature");
+
+  const { mutate: createFeature } = useTaskMutation({
+    slug: "demo_create_feature",
+    params: {
+      ...createFeatureValues,
+    },
+    onSuccess: () => {
+      showNotification({ message: "Created feature!", type: "success" });
+    },
+    onError: (error) => {
+      console.log("VALUES", createFeatureValues);
+      showNotification({
+        message: `Failed creating feature with error: ${error.message}`,
+        type: "error",
+      });
+    },
+  });
+
+  return (
+    <Stack.Item width="1/2">
+      <Title order={4}>Create feature</Title>
+      <Form
+        id="createNewFeature"
+        onSubmit={() => {
+          createFeature();
+        }}
+        resetOnSubmit
+      >
+        <TextInput
+          id="feature_name"
+          name="feature_name"
+          label="Feature name"
+          required
+        />
+        <Checkbox
+          id="is_enabled"
+          name="is_enabled"
+          label="Enable?"
+          defaultChecked
+        />
+      </Form>
+    </Stack.Item>
   );
 };
 
