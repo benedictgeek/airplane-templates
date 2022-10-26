@@ -100,16 +100,16 @@ const EditFeature = ({ selectedFeature, searchKeyword }) => {
         <Title order={5}>Do you want to delete this feature?</Title>
         <Button
           color="red"
-          // task={{
-          //   slug: "demo_delete_feature",
-          //   params: {
-          //     feature_id: selectedFeature.feature_id,
-          //   },
-          //   refetchTasks: {
-          //     slug: searchFeaturesSlug,
-          //     params: { search_keyword: searchKeyword.value },
-          //   },
-          // }}
+          task={{
+            slug: "demo_delete_feature",
+            params: {
+              feature_id: selectedFeature.feature_id,
+            },
+            refetchTasks: {
+              slug: searchFeaturesSlug,
+              params: { search_keyword: searchKeyword.value },
+            },
+          }}
         >
           Delete feature
         </Button>

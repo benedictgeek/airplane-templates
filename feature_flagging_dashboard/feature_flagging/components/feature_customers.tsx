@@ -41,9 +41,24 @@ const FeatureCustomers = ({ selectedFeature }) => {
           rowSelection="single"
           showFilter={true}
           hiddenColumns={["feature_id"]}
-          rowActions={(row) => {
+          rowActions={(row: any) => {
             return (
-              <Button color="red" compact size="sm">
+              <Button
+                color="red"
+                compact
+                size="sm"
+                task={{
+                  slug: "demo_delete_feature_customer",
+                  params: {
+                    feature_id: selectedFeature.feature_id,
+                    customer_id: row.row.customer_id,
+                  },
+                  refetchTasks: {
+                    slug: "demo_search_feature_customers",
+                    params: { search_keyword: searchKeyword.value },
+                  },
+                }}
+              >
                 Delete
               </Button>
             );
@@ -57,29 +72,6 @@ const FeatureCustomers = ({ selectedFeature }) => {
 const AddCustomerToFeature = ({ searchKeyword, selectedFeature }) => {
   const [toggleCreateButton, setToggleButton] = useState(true);
   const [customerId, setCustomerId] = useState<string | null>(null);
-
-  const { mutate: addCustomer } = useTaskMutation({
-    slug: "demo_create_feature_customer",
-    params: {
-      feature_id: selectedFeature?.feature_id,
-      customer_id: customerId,
-    },
-    refetchTasks: {
-      slug: "demo_search_feature_customers",
-      params: { search_keyword: searchKeyword.value },
-    },
-    onSuccess: () => {
-      setToggleButton(true);
-      showNotification({ message: "Created feature!", type: "success" });
-    },
-    onError: (error) => {
-      setToggleButton(true);
-      showNotification({
-        message: `Failed creating feature with error: ${error.message}`,
-        type: "error",
-      });
-    },
-  });
 
   return (
     <>
@@ -107,9 +99,19 @@ const AddCustomerToFeature = ({ searchKeyword, selectedFeature }) => {
             />
 
             <Button
-              onClick={() => addCustomer()}
               sx={{ width: "150px" }}
               disabled={customerId == null}
+              task={{
+                slug: "demo_create_feature_customer",
+                params: {
+                  feature_id: selectedFeature?.feature_id,
+                  customer_id: customerId,
+                },
+                refetchTasks: {
+                  slug: "demo_search_feature_customers",
+                  params: { search_keyword: searchKeyword.value },
+                },
+              }}
             >
               Add customer
             </Button>
