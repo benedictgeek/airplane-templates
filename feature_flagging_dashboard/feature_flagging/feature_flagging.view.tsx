@@ -16,34 +16,87 @@ import {
 
 import dayjs from "dayjs";
 
+const searchFeaturesSlug = "demo_search_features";
+
 const FeaturesDashboard = () => {
   const searchKeyword = useComponentState("searchKeyword");
+  const featuresTable = useComponentState("features");
+  const selectedFeature = featuresTable.selectedRow;
 
   return (
     <Stack>
       <Title>Features dashboard</Title>
       <Text>Look up a feature and list customers subscribed to a feature</Text>
-      <CreateFeature />
-      <Stack direction="column">
+      <CreateFeature searchKeyword={searchKeyword} />
+      <Stack direction="row" align="center" grow>
         <Table
           id="features"
           title="Features"
           columns={featuresCols}
           defaultPageSize={5}
           task={{
-            slug: "demo_search_features",
+            slug: searchFeaturesSlug,
             params: { search_keyword: searchKeyword.value },
           }}
           rowSelection="single"
           showFilter={true}
           hiddenColumns={[]}
         />
+        {selectedFeature && (
+          <EditFeature
+            selectedFeature={selectedFeature}
+            searchKeyword={searchKeyword}
+          />
+        )}
       </Stack>
     </Stack>
   );
 };
 
-const CreateFeature = () => {
+const EditFeature = ({ selectedFeature, searchKeyword }) => {
+  const featureName = useComponentState("editFeatureName");
+  const isEnabled = useComponentState("editFeatureEnabled");
+
+  return (
+    <Card key={selectedFeature.feature_id}>
+      <Stack>
+        <Title order={4}>Edit feature</Title>
+        <TextInput
+          id="editFeatureName"
+          name="feature_name"
+          label="Feature name"
+          required
+          defaultValue={selectedFeature.feature_name}
+        />
+        <Checkbox
+          id="editFeatureEnabled"
+          name="is_enabled"
+          label="Enable?"
+          defaultChecked={selectedFeature.is_enabled}
+        />
+
+        <Button
+          task={{
+            slug: "demo_edit_feature",
+            params: {
+              feature_id: selectedFeature.feature_id,
+              feature_name: featureName.value,
+              is_enabled: isEnabled.value,
+            },
+            refetchTasks: {
+              slug: searchFeaturesSlug,
+              params: { search_keyword: searchKeyword.value },
+            },
+          }}
+        >
+          Update
+        </Button>
+      </Stack>
+    </Card>
+  );
+};
+
+const CreateFeature = ({ searchKeyword }) => {
   const { values: createFeatureValues } = useComponentState("createNewFeature");
 
   const { mutate: createFeature } = useTaskMutation({
@@ -51,11 +104,14 @@ const CreateFeature = () => {
     params: {
       ...createFeatureValues,
     },
+    refetchTasks: {
+      slug: searchFeaturesSlug,
+      params: { search_keyword: searchKeyword.value },
+    },
     onSuccess: () => {
       showNotification({ message: "Created feature!", type: "success" });
     },
     onError: (error) => {
-      console.log("VALUES", createFeatureValues);
       showNotification({
         message: `Failed creating feature with error: ${error.message}`,
         type: "error",
