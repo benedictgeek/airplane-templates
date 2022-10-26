@@ -1,0 +1,23 @@
+# Full reference: https://docs.airplane.dev/tasks/task-definition
+
+slug: demo_search_feature_customers
+name: Search feature customers
+description: "SQL task that shows all customers belonging to a feature that match a search keyword."
+parameters:
+  - slug: search_keyword
+    name: Search keyword
+    type: shorttext
+    description: The search string
+    required: false
+  - slug: feature_id
+    name: Feature ID
+    type: integer
+    description: The feature ID
+    required: false
+sql:
+  # Replace with your own DB name
+  resource: "[Demo DB]"
+  entrypoint: search_feature_customers.sql
+  queryArgs:
+    keyword: "{{params.search_keyword}}"
+    feature_id: "{{params.feature_id}}"

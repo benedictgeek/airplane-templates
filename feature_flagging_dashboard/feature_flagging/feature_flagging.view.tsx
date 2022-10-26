@@ -15,6 +15,8 @@ import {
 } from "@airplane/views";
 
 import dayjs from "dayjs";
+import { useState } from "react";
+import FeatureCustomers from "./components/feature_customers";
 
 const searchFeaturesSlug = "demo_search_features";
 
@@ -27,7 +29,8 @@ const FeaturesDashboard = () => {
     <Stack>
       <Title>Features dashboard</Title>
       <Text>Look up a feature and list customers subscribed to a feature</Text>
-      <CreateFeature searchKeyword={searchKeyword} />
+      <CreateFeature key={"createFestureCard"} searchKeyword={searchKeyword} />
+
       <Stack direction="row" align="center" grow>
         <Table
           id="features"
@@ -49,6 +52,9 @@ const FeaturesDashboard = () => {
           />
         )}
       </Stack>
+      {selectedFeature && (
+        <FeatureCustomers selectedFeature={selectedFeature} />
+      )}
     </Stack>
   );
 };
@@ -74,7 +80,6 @@ const EditFeature = ({ selectedFeature, searchKeyword }) => {
           label="Enable?"
           defaultChecked={selectedFeature.is_enabled}
         />
-
         <Button
           task={{
             slug: "demo_edit_feature",
@@ -91,12 +96,30 @@ const EditFeature = ({ selectedFeature, searchKeyword }) => {
         >
           Update
         </Button>
+        <Divider />
+        <Title order={5}>Do you want to delete this feature?</Title>
+        <Button
+          color="red"
+          // task={{
+          //   slug: "demo_delete_feature",
+          //   params: {
+          //     feature_id: selectedFeature.feature_id,
+          //   },
+          //   refetchTasks: {
+          //     slug: searchFeaturesSlug,
+          //     params: { search_keyword: searchKeyword.value },
+          //   },
+          // }}
+        >
+          Delete feature
+        </Button>
       </Stack>
     </Card>
   );
 };
 
 const CreateFeature = ({ searchKeyword }) => {
+  const [toggleCreateButton, setToggleButton] = useState(true);
   const { values: createFeatureValues } = useComponentState("createNewFeature");
 
   const { mutate: createFeature } = useTaskMutation({
@@ -109,9 +132,11 @@ const CreateFeature = ({ searchKeyword }) => {
       params: { search_keyword: searchKeyword.value },
     },
     onSuccess: () => {
+      setToggleButton(true);
       showNotification({ message: "Created feature!", type: "success" });
     },
     onError: (error) => {
+      setToggleButton(true);
       showNotification({
         message: `Failed creating feature with error: ${error.message}`,
         type: "error",
@@ -120,29 +145,37 @@ const CreateFeature = ({ searchKeyword }) => {
   });
 
   return (
-    <Stack.Item width="1/2">
-      <Title order={4}>Create feature</Title>
-      <Form
-        id="createNewFeature"
-        onSubmit={() => {
-          createFeature();
-        }}
-        resetOnSubmit
-      >
-        <TextInput
-          id="feature_name"
-          name="feature_name"
-          label="Feature name"
-          required
-        />
-        <Checkbox
-          id="is_enabled"
-          name="is_enabled"
-          label="Enable?"
-          defaultChecked
-        />
-      </Form>
-    </Stack.Item>
+    <>
+      {toggleCreateButton ? (
+        <Button onClick={() => setToggleButton(false)} sx={{ width: "150px" }}>
+          Add new feature
+        </Button>
+      ) : (
+        <Stack.Item width="1/2">
+          <Title order={4}>Create feature</Title>
+          <Form
+            id="createNewFeature"
+            onSubmit={() => {
+              createFeature();
+            }}
+            resetOnSubmit
+          >
+            <TextInput
+              id="feature_name"
+              name="feature_name"
+              label="Feature name"
+              required
+            />
+            <Checkbox
+              id="is_enabled"
+              name="is_enabled"
+              label="Enable?"
+              defaultChecked
+            />
+          </Form>
+        </Stack.Item>
+      )}
+    </>
   );
 };
 
