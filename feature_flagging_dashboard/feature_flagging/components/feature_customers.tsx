@@ -11,14 +11,20 @@ import {
   Divider,
   Form,
   showNotification,
-  useTaskMutation
+  useTaskMutation,
+  Select,
 } from "@airplane/views";
+import { useState } from "react";
 
 const FeatureCustomers = ({ selectedFeature }) => {
   const searchKeyword = useComponentState("searchKeyword");
 
   return (
     <Stack>
+      <AddCustomerToFeature
+        searchKeyword={searchKeyword}
+        selectedFeature={selectedFeature}
+      />
       <Stack direction="row" align="center" grow>
         <Table
           id="featureCustomers"
@@ -45,6 +51,72 @@ const FeatureCustomers = ({ selectedFeature }) => {
         />
       </Stack>
     </Stack>
+  );
+};
+
+const AddCustomerToFeature = ({ searchKeyword, selectedFeature }) => {
+  const [toggleCreateButton, setToggleButton] = useState(true);
+  const [customerId, setCustomerId] = useState<string | null>(null);
+
+  const { mutate: addCustomer } = useTaskMutation({
+    slug: "demo_create_feature_customer",
+    params: {
+      feature_id: selectedFeature?.feature_id,
+      customer_id: customerId,
+    },
+    refetchTasks: {
+      slug: "demo_search_feature_customers",
+      params: { search_keyword: searchKeyword.value },
+    },
+    onSuccess: () => {
+      setToggleButton(true);
+      showNotification({ message: "Created feature!", type: "success" });
+    },
+    onError: (error) => {
+      setToggleButton(true);
+      showNotification({
+        message: `Failed creating feature with error: ${error.message}`,
+        type: "error",
+      });
+    },
+  });
+
+  return (
+    <>
+      {toggleCreateButton ? (
+        <Button onClick={() => setToggleButton(false)} sx={{ width: "180px" }}>
+          Add new customer
+        </Button>
+      ) : (
+        <Card key={selectedFeature?.feature_id + "add_customer"}>
+          <Stack width="1/2">
+            <Title order={5}>Add customer to feature</Title>
+            <Select
+              id="selectCustomer"
+              task="demo_customers_list"
+              outputTransform={(v) =>
+                v.Q1.map(
+                  (customer) =>
+                    customer.customer_id + " - " + customer.contact_name
+                )
+              }
+              placeholder="Select a customer"
+              onChange={(value) =>
+                setCustomerId(value?.toString().split(" - ")[0] || "")
+              }
+            />
+
+            <Button
+              onClick={() => addCustomer()}
+              sx={{ width: "150px" }}
+              disabled={customerId == null}
+            >
+              Add customer
+            </Button>
+          </Stack>
+        </Card>
+      )}
+    </>
   );
 };
 
