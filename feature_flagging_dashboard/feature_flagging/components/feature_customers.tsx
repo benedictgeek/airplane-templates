@@ -111,6 +111,13 @@ const AddCustomerToFeature = ({ searchKeyword, selectedFeature }) => {
                   slug: "demo_search_feature_customers",
                   params: { search_keyword: searchKeyword.value },
                 },
+                onSuccess: () => {
+                  setToggleButton(true);
+                  showNotification({
+                    message: "Added customer to feature!",
+                    type: "success",
+                  });
+                },
               }}
             >
               Add customer
