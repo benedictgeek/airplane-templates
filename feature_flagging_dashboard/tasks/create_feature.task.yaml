@@ -4,11 +4,6 @@ slug: demo_create_feature
 name: Create features
 description: "SQL task that creates a new feature."
 parameters:
-  - slug: feature_id
-    name: Feature ID
-    type: integer
-    description: The feature id
-    required: true
   - slug: feature_name
     name: Feature name
     type: shorttext
@@ -19,11 +14,6 @@ parameters:
     type: boolean
     description: Boolean feild indicating whether a feature is enabled or not
     required: true
-  - slug: updated_at
-    name: Last update
-    type: datetime
-    description: Date of last update
-    required: true
 sql:
   # Replace with your own DB name
   resource: "[Demo DB]"
@@ -31,4 +21,3 @@ sql:
   queryArgs:
     feature_name: "{{params.feature_name}}"
     is_enabled: "{{params.is_enabled}}"
-    updated_at: "{{params.updated_at}}"

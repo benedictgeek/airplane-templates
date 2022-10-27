@@ -243,6 +243,7 @@ const FeatureCustomers = ({ selectedFeature }) => {
 };
 
 const AddCustomerToFeature = ({ selectedFeature }) => {
+  const [loading, setLoading] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState<any>("");
 
   return (
@@ -262,11 +263,13 @@ const AddCustomerToFeature = ({ selectedFeature }) => {
             value={selectedCustomer ?? ""}
             placeholder="Select a customer"
             onChange={(value) => setSelectedCustomer(value)}
+            disabled={loading}
           />
 
           <Button
             sx={{ width: "150px" }}
             disabled={selectedCustomer == ""}
+            onClick={() => setLoading(true)}
             task={{
               slug: "demo_create_feature_customer",
               params: {
@@ -276,8 +279,14 @@ const AddCustomerToFeature = ({ selectedFeature }) => {
               refetchTasks: {
                 slug: "demo_search_feature_customers",
               },
-              onSuccess: () => setSelectedCustomer(""),
-              onError: () => setSelectedCustomer(""),
+              onSuccess: () => {
+                setSelectedCustomer("");
+                setLoading(false);
+              },
+              onError: () => {
+                setSelectedCustomer("");
+                setLoading(false);
+              },
             }}
           >
             Add
