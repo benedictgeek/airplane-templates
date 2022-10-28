@@ -1,8 +1,7 @@
--- Add your SQL queries here.
--- See SQL documentation: https://docs.airplane.dev/creating-tasks/sql
 SELECT
   feature_id,
   feature_name,
+  feature_description,
   is_enabled,
   updated_at
 FROM

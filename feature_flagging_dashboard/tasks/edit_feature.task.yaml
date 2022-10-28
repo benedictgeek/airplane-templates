@@ -14,6 +14,11 @@ parameters:
     type: shorttext
     description: The feature name
     required: true
+  - slug: feature_description
+    name: Feature description
+    type: longtext
+    description: The feature's description
+    required: false
   - slug: is_enabled
     name: Is enabled
     type: boolean
@@ -26,4 +31,5 @@ sql:
   queryArgs:
     feature_id: "{{params.feature_id}}"
     feature_name: "{{params.feature_name}}"
+    feature_description: "{{params.feature_description}}"
     is_enabled: "{{params.is_enabled}}"

@@ -1,10 +1,3 @@
--- Add your SQL queries here.
--- See SQL documentation: https://docs.airplane.dev/creating-tasks/sql
--- INSERT INTO
---   features_customers ("feature_id", "customer_id")
--- VALUES
---   (:feature_id, :customer_id) RETURNING feature_id,
---   customer_id;
 INSERT INTO
   features_customers ("feature_id", "customer_id")
 SELECT

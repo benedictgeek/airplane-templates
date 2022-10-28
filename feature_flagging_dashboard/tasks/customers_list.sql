@@ -1,4 +1,3 @@
--- See SQL documentation: https://docs.airplane.dev/creating-tasks/sql
 SELECT
   customer_id,
   company_name,
