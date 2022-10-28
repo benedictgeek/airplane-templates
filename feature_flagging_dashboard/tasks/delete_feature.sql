@@ -7,3 +7,4 @@ DELETE FROM
   features
 WHERE
   feature_id = :feature_id;
+  

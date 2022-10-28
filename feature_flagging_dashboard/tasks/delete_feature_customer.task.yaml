@@ -1,18 +1,15 @@
 # Full reference: https://docs.airplane.dev/tasks/task-definition
 
 slug: demo_delete_feature_customer
-name: Delete feature customer
-description: "SQL task that deletes a customer from a feature."
+name: Disable feature for customer
 parameters:
   - slug: feature_id
     name: Feature ID
     type: integer
-    description: The feature id 
     required: true
   - slug: customer_id
     name: Customer ID
     type: shorttext
-    description: The customer id
     required: true
 sql:
   # Replace with your own DB name

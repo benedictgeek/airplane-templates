@@ -22,3 +22,4 @@ VALUES
   feature_name,
   is_enabled,
   updated_at;
+  

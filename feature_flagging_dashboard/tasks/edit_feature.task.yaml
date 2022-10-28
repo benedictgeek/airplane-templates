@@ -2,27 +2,23 @@
 
 slug: demo_edit_feature
 name: Edit feature
-description: "SQL task that edits a feature."
 parameters:
   - slug: feature_id
     name: Feature ID
     type: integer
-    description: The feature id
     required: true
   - slug: feature_name
     name: Feature name
     type: shorttext
-    description: The feature name
     required: true
   - slug: feature_description
     name: Feature description
     type: longtext
-    description: The feature's description
     required: false
   - slug: is_enabled
     name: Is enabled
     type: boolean
-    description: Boolean feild indicating whether a feature is enabled or not
+    description: Boolean field indicating whether a feature is enabled or not
     required: true
 sql:
   # Replace with your own DB name

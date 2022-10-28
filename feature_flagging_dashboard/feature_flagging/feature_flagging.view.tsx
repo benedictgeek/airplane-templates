@@ -35,7 +35,7 @@ const FeaturesDashboard = () => {
           columns={featuresCols}
           defaultPageSize={5}
           task={{
-            slug: "demo_search_features",
+            slug: "demo_list_features",
           }}
           hiddenColumns={["feature_id"]}
           rowSelection="single"
@@ -55,7 +55,7 @@ const FeaturesDashboard = () => {
                       is_enabled: row.is_enabled,
                     },
                     refetchTasks: {
-                      slug: "demo_search_features",
+                      slug: "demo_list_features",
                     },
                   }}
                 >
@@ -72,7 +72,7 @@ const FeaturesDashboard = () => {
                       feature_id: row.feature_id,
                     },
                     refetchTasks: {
-                      slug: "demo_search_features",
+                      slug: "demo_list_features",
                     },
                   }}
                   confirm={{
@@ -144,7 +144,7 @@ const CreateFeatureButton = () => {
                     feature_description: featureDescriptionState.value,
                   },
                   refetchTasks: {
-                    slug: "demo_search_features",
+                    slug: "demo_list_features",
                   },
                   onSuccess: () => {
                     dialogState.close();
@@ -181,7 +181,7 @@ const CustomerFeaturesTable = ({
           columns={featureCustomersCols}
           defaultPageSize={5}
           task={{
-            slug: "demo_search_feature_customers",
+            slug: "demo_list_feature_customers",
             params: {
               feature_id: selectedFeature.feature_id,
             },
@@ -202,7 +202,7 @@ const CustomerFeaturesTable = ({
                     customer_id: row.customer_id,
                   },
                   refetchTasks: {
-                    slug: "demo_search_feature_customers",
+                    slug: "demo_list_feature_customers",
                   },
                 }}
                 confirm={{
@@ -258,7 +258,7 @@ const AddCustomerToFeature = ({
                 customer_id: customerSelectState.value,
               },
               refetchTasks: {
-                slug: "demo_search_feature_customers",
+                slug: "demo_list_feature_customers",
               },
               onSuccess: () => {
                 setLoading(false);
