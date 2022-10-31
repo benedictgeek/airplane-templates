@@ -11,6 +11,7 @@ import {
   Select,
   Dialog,
   Textarea,
+  Column,
 } from "@airplane/views";
 
 import { useState } from "react";
@@ -105,9 +106,7 @@ const CreateFeatureButton = () => {
 
   return (
     <>
-      <Button onClick={dialogState.open} >
-        Add new feature
-      </Button>
+      <Button onClick={dialogState.open}>Add new feature</Button>
 
       <Dialog
         id={dialogState.id}
@@ -294,19 +293,19 @@ interface CustomerFeatureRowType {
   country: string;
 }
 
-const featuresCols = [
-  { accessor: "feature_name", label: "Name", canEdit: "true" },
-  { accessor: "feature_description", label: "Description", canEdit: "true" },
+const featuresCols: Column[] = [
+  { accessor: "feature_name", label: "Name", canEdit: true },
+  { accessor: "feature_description", label: "Description", canEdit: true },
   { accessor: "updated_at", label: "Last updated", type: "date" },
   {
     accessor: "is_enabled",
     label: "Is enabled",
-    canEdit: "true",
+    canEdit: true,
     type: "boolean",
   },
 ];
 
-const featureCustomersCols = [
+const featureCustomersCols: Column[] = [
   { accessor: "contact_name", label: "Contact name" },
   { accessor: "address", label: "Address" },
   { accessor: "country", label: "Country" },
