@@ -1,5 +1,5 @@
 name: Ruby task
-slug: ruby_task
+slug: demo_ruby_task
 description: Provide JSON data and have it pretty printed with this Ruby task
 parameters:
   - name: Admin
