@@ -8,8 +8,11 @@ vendor
 
 yarn.lock
 package-lock.json
+
+# Airplane folders
 .airplane-view
+.airplane
 
 # Editors
 .idea/
-.vscode/
+.vscode
