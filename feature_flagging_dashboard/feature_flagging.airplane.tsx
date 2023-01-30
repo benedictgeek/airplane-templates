@@ -121,7 +121,7 @@ const CreateFeatureButton = () => {
             />
             <Textarea
               id={featureDescriptionState.id}
-              label="Feature desctiption"
+              label="Feature description"
               disabled={loading}
             />
             <Checkbox
