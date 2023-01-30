@@ -6,13 +6,18 @@ import {
   TextInput,
   useComponentState,
   Column,
+  TextInputState,
+  TableState,
 } from "@airplane/views";
 import airplane from "airplane";
+import { useDebounce } from "use-debounce";
 
 const Dashboard = () => {
-  const searchKeyword = useComponentState("searchKeyword");
-  const stripeCustomers = useComponentState("stripeCustomers");
-  const selectedCustomer = stripeCustomers.selectedRow;
+  const customerSearch = useComponentState<TextInputState>(); // Component state of the customer search TextInput.
+  const customerTable = useComponentState<TableState>(); // Component state of the customer Table.
+  const selectedCustomer = customerTable.selectedRow;
+  // Debounce the search value so we don't execute a task on every keystroke.
+  const [searchValue] = useDebounce(customerSearch.value, 500);
 
   return (
     <Stack>
@@ -21,14 +26,14 @@ const Dashboard = () => {
         Lookup customers by their name or email, view all charges for that
         customer, and refund a charge if needed.
       </Text>
-      <TextInput id="searchKeyword" label="Search for a customer" />
-      {searchKeyword.value && (
+      <TextInput id={customerSearch.id} label="Search for a customer" />
+      {searchValue && (
         <Table
-          id="stripeCustomers"
+          id={customerTable.id}
           title="Search results"
           task={{
             slug: "demo_list_stripe_customers",
-            params: { search_keyword: searchKeyword.value },
+            params: { search_keyword: searchValue },
           }}
           rowSelection="single"
           showFilter={false}
@@ -39,7 +44,6 @@ const Dashboard = () => {
       {selectedCustomer && (
         <Stack>
           <Table
-            id="customerDetails"
             title="Customer details"
             task={{
               slug: "demo_lookup_stripe_customer",
@@ -49,7 +53,6 @@ const Dashboard = () => {
             columns={customerDetailsCols}
           />
           <Table
-            id="customerCharges"
             title="Charges for this customer"
             task={{
               slug: "demo_lookup_charges_for_stripe_customer",
