@@ -1,4 +1,4 @@
-# Template: Customer Relationship Mangament Dashboard
+# Template: Customer Relationship Management Dashboard
 
 ## Next steps
 
