@@ -290,7 +290,7 @@ interface CustomerFeatureRowType {
   country: string;
 }
 
-const featuresCols: Column[] = [
+const featuresCols: Column<FeatureRowType>[] = [
   { accessor: "feature_name", label: "Name", canEdit: true },
   { accessor: "feature_description", label: "Description", canEdit: true },
   { accessor: "updated_at", label: "Last updated", type: "datetime" },
@@ -302,7 +302,7 @@ const featuresCols: Column[] = [
   },
 ];
 
-const featureCustomersCols: Column[] = [
+const featureCustomersCols: Column<CustomerFeatureRowType>[] = [
   { accessor: "contact_name", label: "Contact name" },
   { accessor: "address", label: "Address" },
   { accessor: "country", label: "Country" },
