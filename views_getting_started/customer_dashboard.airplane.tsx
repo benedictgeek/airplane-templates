@@ -4,8 +4,8 @@ import {
   Title,
   useComponentState,
   Card,
-  Text,
   Button,
+  DescriptionList,
 } from "@airplane/views";
 import airplane from "airplane";
 
