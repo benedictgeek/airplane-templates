@@ -12,6 +12,7 @@ import {
   showNotification,
   Button,
 } from "@airplane/views";
+import airplane from "airplane";
 
 const CustomerDashboard = () => {
   return (
@@ -43,6 +44,7 @@ const CreateAccount = () => {
         type: "error",
       });
     },
+    refetchTasks: ["demo_list_new_accounts"],
   });
 
   return (
@@ -208,4 +210,11 @@ const newAccountsCols = [
   },
 ];
 
-export default CustomerDashboard;
+export default airplane.view(
+  {
+    slug: "demo_customer_onboarding",
+    name: "Customer onboarding",
+    description: "Create and onboard new accounts",
+  },
+  CustomerDashboard
+);

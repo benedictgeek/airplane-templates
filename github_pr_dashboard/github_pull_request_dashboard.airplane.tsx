@@ -9,6 +9,7 @@ import {
   Title,
   useComponentState,
 } from "@airplane/views";
+import airplane from "airplane";
 
 // Views documentation: https://docs.airplane.dev/views/getting-started
 const GitHubPRDashboard = () => {
@@ -43,7 +44,7 @@ const GitHubPRDashboard = () => {
         <Stack direction="row" spacing="lg">
           <Card
             radius="xs"
-            sx={{ height: 500, overflow: "auto" }}
+            style={{ height: 500, overflow: "auto" }}
             width={{ xs: "100%", md: "50%" }}
           >
             <Stack>
@@ -58,7 +59,7 @@ const GitHubPRDashboard = () => {
           <Card
             radius="xs"
             width={{ xs: "100%", md: "50%" }}
-            sx={{ height: 500, overflow: "auto" }}
+            style={{ height: 500, overflow: "auto" }}
           >
             <Stack>
               <Title order={3}>✅ Approved PRs</Title>
@@ -72,7 +73,7 @@ const GitHubPRDashboard = () => {
           <Card
             radius="xs"
             width={{ xs: "100%", md: "50%" }}
-            sx={{ height: 500, overflow: "auto" }}
+            style={{ height: 500, overflow: "auto" }}
           >
             <Stack>
               <Title order={3}>✏️ PRs to review</Title>
@@ -106,4 +107,10 @@ const PR = ({ pr }) => {
   );
 };
 
-export default GitHubPRDashboard;
+export default airplane.view(
+  {
+    slug: "demo_github_pull_request_dashboard",
+    name: "GitHub pull request dashboard",
+  },
+  GitHubPRDashboard
+);
