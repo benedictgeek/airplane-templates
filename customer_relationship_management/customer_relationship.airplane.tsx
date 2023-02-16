@@ -211,23 +211,7 @@ const CreateLeadButton = () => {
         title="Create lead"
         onClose={dialogState.close}
       >
-        <Stack>
-          <Form task="demo_create_lead"></Form>
-          {/* refetchTasks: {
-                  slug: "demo_list_customers_by_stage",
-                  params: {
-                    opportunity_stage: stageFilterButtons[stageButtonIndex].key,
-                  },
-                },
-                onSuccess: () => {
-                  dialogState.close();
-                  setLoading(false);
-                },
-                onError: (error) => {
-                  dialogState.close();
-                  setLoading(false);
-                }, */}
-        </Stack>
+        <Form task="demo_create_lead"></Form>
       </Dialog>
     </>
   );
@@ -267,20 +251,6 @@ const CreateTouchPointButton = ({
                 ],
               }}
             />
-            {/* refetchTasks: [
-                    {
-                      slug: "demo_list_customer_touch_points",
-                      params: {
-                        customer_id: selectedCustomer.customer_id,
-                      },
-                    },
-                    {
-                      slug: "demo_list_customers_by_stage",
-                      params: {
-                        opportunity_stage: selectedCustomer.opportunity_stage,
-                      },
-                    },
-                  ], */}
           </Stack>
         </Card>
       </Dialog>
