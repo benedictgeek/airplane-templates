@@ -86,6 +86,7 @@ const FeaturesDashboard = () => {
               </Stack>
             );
           }}
+          grow
         />
       </Stack>
       {selectedFeature && (
@@ -212,6 +213,7 @@ const CustomerFeaturesTable = ({
               </Button>
             );
           }}
+          grow
         />
       </Stack>
     </Stack>

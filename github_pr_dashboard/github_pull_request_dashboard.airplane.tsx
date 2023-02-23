@@ -41,38 +41,36 @@ const GitHubPRDashboard = () => {
       </Stack>
 
       {output && !error && (
-        <Stack direction="row" spacing="lg">
+        <>
+          <Stack direction="row" spacing="lg" wrap>
+            <Card
+              radius="xs"
+              style={{ overflow: "auto" }}
+              height="128u"
+              width="1/2"
+              grow
+            >
+              <Stack>
+                <Title order={3}>‍💻 Open PRs</Title>
+                {output.authored.map((pr) => (
+                  <PR pr={pr} />
+                ))}
+                {!output.authored.length && <Text size="xl">None</Text>}
+              </Stack>
+            </Card>
+            <Card radius="xs" style={{ overflow: "auto" }} height="128u" grow>
+              <Stack>
+                <Title order={3}>✅ Approved PRs</Title>
+                {output.approved.map((pr) => (
+                  <PR pr={pr} />
+                ))}
+                {!output.approved.length && <Text size="xl">None</Text>}
+              </Stack>
+            </Card>
+          </Stack>
           <Card
             radius="xs"
-            style={{ height: 500, overflow: "auto" }}
-            width={{ xs: "100%", md: "50%" }}
-          >
-            <Stack>
-              <Title order={3}>‍💻 Open PRs</Title>
-              {output.authored.map((pr) => (
-                <PR pr={pr} />
-              ))}
-              {!output.authored.length && <Text size="xl">None</Text>}
-            </Stack>
-          </Card>
-
-          <Card
-            radius="xs"
-            width={{ xs: "100%", md: "50%" }}
-            style={{ height: 500, overflow: "auto" }}
-          >
-            <Stack>
-              <Title order={3}>✅ Approved PRs</Title>
-              {output.approved.map((pr) => (
-                <PR pr={pr} />
-              ))}
-              {!output.approved.length && <Text size="xl">None</Text>}
-            </Stack>
-          </Card>
-
-          <Card
-            radius="xs"
-            width={{ xs: "100%", md: "50%" }}
+            width="full"
             style={{ height: 500, overflow: "auto" }}
           >
             <Stack>
@@ -83,7 +81,7 @@ const GitHubPRDashboard = () => {
               {!output.toReview.length && <Text size="xl">None</Text>}
             </Stack>
           </Card>
-        </Stack>
+        </>
       )}
     </Stack>
   );
@@ -100,7 +98,7 @@ const PR = ({ pr }) => {
       </Stack>
       {pr.body && <Text lineClamp={4}>{pr.body}</Text>}
       <Stack direction="row" align="center" spacing="sm">
-        {pr.avatar && <Image width={16} src={pr.avatar} />}
+        {pr.avatar && <Image imageWidth="48px" src={pr.avatar} />}
         <Text size="sm">{pr.author}</Text>
       </Stack>
     </Card>
